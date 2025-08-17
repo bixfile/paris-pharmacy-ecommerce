@@ -1,4 +1,6 @@
 import type { Metadata } from 'next'
+import { redirect } from 'next/navigation'
+import { createClient } from '@/lib/supabase/server'
 import { AuthTabs } from '@/components/auth/auth-tabs'
 
 export const metadata: Metadata = {
@@ -10,7 +12,21 @@ export const metadata: Metadata = {
   },
 }
 
-export default function AuthPage() {
+export default async function AuthPage() {
+  // Check if user is already authenticated
+  const supabase = createClient()
+  
+  try {
+    const { data: { user } } = await supabase.auth.getUser()
+    
+    if (user) {
+      redirect('/')
+    }
+  } catch (error) {
+    // If there's any error, just continue to show the auth page
+    console.log('Auth check skipped:', error)
+  }
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
