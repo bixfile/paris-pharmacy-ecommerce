@@ -1,6 +1,4 @@
 import type { Metadata } from 'next'
-import { redirect } from 'next/navigation'
-import { createClient } from '@/lib/supabase/server'
 
 export const metadata: Metadata = {
   title: 'Admin Dashboard | Paris Pharmacy',
@@ -11,32 +9,8 @@ export const metadata: Metadata = {
   },
 }
 
-export default async function AdminDashboard() {
-  // Check authentication at page level
-  const supabase = createClient()
-  
-  try {
-    const { data: { user }, error } = await supabase.auth.getUser()
-    
-    if (error || !user) {
-      redirect('/auth?redirectTo=/admin')
-    }
-
-    // Optional: Check if user has admin role
-    // For initial setup, we'll skip this check
-    // const { data: userRole } = await supabase
-    //   .from('user_roles')
-    //   .select('role')
-    //   .eq('user_id', user.id)
-    //   .single()
-    
-    // if (!userRole || userRole.role !== 'admin') {
-    //   redirect('/')
-    // }
-  } catch (error) {
-    // If there's any error, just continue to show the page
-    console.log('Admin auth check skipped:', error)
-  }
+export default function AdminDashboard() {
+  // Authentication is handled at layout level
 
   return (
     <main className="min-h-screen bg-gray-50">
