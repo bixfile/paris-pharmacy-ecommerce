@@ -152,61 +152,36 @@ export async function FeaturedProducts() {
     },
   ]
 
-  try {
-    // Try to get featured products from database, fallback to mock data
-    // const products = await getFeaturedProducts(8)
-    const products = mockProducts
-    
-    return (
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Featured Products
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Discover our most popular and highly-rated health and wellness products, 
-              carefully selected by our expert pharmacists.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-            {products.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
-
-          <div className="text-center">
-            <Button size="lg" variant="outline" asChild>
-              <Link href="/products">
-                View All Products
-              </Link>
-            </Button>
-          </div>
+  // Always use mock products for now to ensure design works
+  const products = mockProducts
+  
+  return (
+    <section className="py-16 bg-white">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            Featured Products
+          </h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Discover our most popular and highly-rated health and wellness products, 
+            carefully selected by our expert pharmacists.
+          </p>
         </div>
-      </section>
-    )
-  } catch (error) {
-    console.error('Error loading featured products:', error)
-    
-    return (
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Featured Products
-            </h2>
-            <p className="text-muted-foreground mb-8">
-              Featured products will appear here once your database is connected.
-            </p>
-            <Button size="lg" variant="outline" asChild>
-              <Link href="/products">
-                Browse Products
-              </Link>
-            </Button>
-          </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+          {products.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
         </div>
-      </section>
-    )
-  }
+
+        <div className="text-center">
+          <Button size="lg" variant="outline" asChild>
+            <Link href="/products">
+              View All Products
+            </Link>
+          </Button>
+        </div>
+      </div>
+    </section>
+  )
 }
